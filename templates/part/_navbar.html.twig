@@ -1,0 +1,29 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-custom pt-1 pb-2 mb-2">
+    <div class="container">
+        <!-- Logo -->
+        <a class="navbar-brand" href="{{ path('app_home') }}">
+            <img src="{{ asset('images/logo.png') }}" width="40" height="40" alt="Logo">
+        </a>
+
+        <!-- Bouton burger (visible sur mobile) -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Menu (collapse sur mobile) -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="{{ path('app_home') }}">Accueil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_about_us') }}">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('wish_app_list') }}">Liste de souhaits</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
