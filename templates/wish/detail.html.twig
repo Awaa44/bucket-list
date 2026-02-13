@@ -3,8 +3,12 @@
 {% block body %}
 
     <h2>Détail d'un souhait</h2>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate numquam odio omnis optio rem sit, suscipit?
-        Accusantium architecto deserunt dolores facilis fuga, minima saepe sunt voluptatibus! Explicabo fugiat natus rerum.</p>
+
+    {% if (id == id) %}
+    <h3>{{ wish.title }}</h3>
+        <p>par {{ wish.author }} le {{ wish.dateCreated|date('d/m/Y') }}</p>
+        <p>{{ wish.description }}</p>
+    {% endif %}
 
 {% endblock %}
 

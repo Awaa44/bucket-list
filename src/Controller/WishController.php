@@ -2,24 +2,34 @@
 
 namespace App\Controller;
 
+use App\Repository\WishRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/wish', name: 'wish_')]
+#[Route('/wish', name: 'app_wish')]
 final class WishController extends AbstractController
 {
-    #[Route('/', name: 'app_list', methods: ['GET'])]
-    public function list(): Response
+    #[Route('/', name: '_list', methods: ['GET'])]
+    public function list(WishRepository $wishRepository): Response
     {
-        return $this-> render('wish/list.html.twig');
+        $wishes = $wishRepository->findAll();
+
+        return $this-> render('wish/list.html.twig', [
+            'wishes' => $wishes,
+        ]);
     }
 
-    #[Route('/{id}', name: 'app_detail', methods: ['GET'])]
-    public function wishDetail(int $id): Response
+    #[Route('/{id}', name: '_detail', requirements: ['id'=> '\d+'], methods: ['GET'])]
+    public function wishDetail(WishRepository $wishRepository, int $id): Response
     {
+
+
+        $wish = $wishRepository->findOneBy(['id' => $id]);
+
         return $this-> render('wish/detail.html.twig', [
-            'wishId' => $id
+            'id' => $id,
+            'wish' => $wish
         ]);
     }
 }

@@ -3,8 +3,34 @@
 {% block body %}
 
     <h2>Liste de souhaits</h2>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate numquam odio omnis optio rem sit, suscipit?
-        Accusantium architecto deserunt dolores facilis fuga, minima saepe sunt voluptatibus! Explicabo fugiat natus rerum.</p>
+
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Nom du Souhait</th>
+            <th scope="col">Description du Souhait</th>
+            <th scope="col">Auteur</th>
+            <th scope="col">Publié</th>
+            <th scope="col">Date de création</th>
+            <th scope="col">Date de modificattion</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for wish in wishes %}
+        <tr>
+            <th scope="row">{{ wish.id }}</th>
+            <td><a href="{{ path('app_wish_detail', {id: wish.id}) }}">{{ wish.title }}</a></td>
+            <td>{{ wish.description }}</td>
+            <td>{{ wish.author }}</td>
+            <td>{{ wish.isPublished ? 'Oui' : "Non" }}</td>
+            <td>{{ wish.dateCreated|date('d/m/Y') }}</td>
+            <td>{{ wish.dateUpdated|date('d/m/Y') }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
 
 {% endblock %}
 
