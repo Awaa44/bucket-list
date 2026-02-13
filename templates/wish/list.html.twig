@@ -25,7 +25,7 @@
             <td>{{ wish.author }}</td>
             <td>{{ wish.isPublished ? 'Oui' : "Non" }}</td>
             <td>{{ wish.dateCreated|date('d/m/Y') }}</td>
-            <td>{{ wish.dateUpdated|date('d/m/Y') }}</td>
+            <td>{{ wish.dateUpdated ? wish.dateUpdated|date('d/m/Y') : '' }}</td>
         </tr>
         {% endfor %}
         </tbody>

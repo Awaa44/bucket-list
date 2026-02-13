@@ -4,9 +4,12 @@
 
     <h2>Détail d'un souhait</h2>
 
-    <h3>{{ wish.title }}</h3>
-        <p>par {{ wish.author }} le {{ wish.dateCreated|date('d/m/Y') }}</p>
-        <p>{{ wish.description }}</p>
+    <div class="card mt-2 mb-2 w-50 m-auto">
+        <div class="card-body">
+            <h5 class="card-title">{{ wish.title }}</h5>
+            <p class="card-body">par {{ wish.author }} le {{ wish.dateCreated|date('d/m/Y') }}</p>
+            <p class="card-body">{{ wish.description }}</p>
+        </div>
 
 {% endblock %}
 
