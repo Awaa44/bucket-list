@@ -23,12 +23,13 @@ final class WishController extends AbstractController
     #[Route('/{id}', name: '_detail', requirements: ['id'=> '\d+'], methods: ['GET'])]
     public function wishDetail(WishRepository $wishRepository, int $id): Response
     {
-
-
         $wish = $wishRepository->findOneBy(['id' => $id]);
 
+        if(!$wish){
+            throw $this->createNotFoundException('Ce souhait n\'existe pas');
+        }
+
         return $this-> render('wish/detail.html.twig', [
-            'id' => $id,
             'wish' => $wish
         ]);
     }
