@@ -9,7 +9,15 @@
             <h5 class="card-title">{{ wish.title }}</h5>
             <p class="card-body">par {{ wish.author }} le {{ wish.dateCreated|date('d/m/Y') }}</p>
             <p class="card-body">{{ wish.description }}</p>
+
+            <a class="btn btn-warning" href="{{ path('app_wish_create', {id: wish.id}) }}" role="button">Modifier</a>
+            <a href="{{ path('app_wish_delete', {id: wish.id, token: csrf_token('delete' ~ wish.id)}) }}"
+               class="btn btn-danger"
+               onclick="return confirm('Etes-vous sûr???')"
+            >Supprimer</a>
+
         </div>
+    </div>
 
 {% endblock %}
 

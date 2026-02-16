@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\WishRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: WishRepository::class)]
 class Wish
@@ -15,16 +16,23 @@ class Wish
     private ?int $id = null;
 
     #[ORM\Column(length: 250)]
+    #[Assert\NotBlank(message: 'Le nom de votre souhait est obligatoire')]
+    #[Assert\Length(min:3, max: 30, minMessage: 'Votre souhait doit faire au moins {{ limit }} caractères',
+        maxMessage: 'Votre souhait ne doit pas dépasser 30 caractères')]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank(message: 'La description de votre souhait est obligatoire')]
     private ?string $description = null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank(message: 'Le nom d\'utilisateur est obligatoire')]
+    #[Assert\Length(max: 50, maxMessage: 'Le nom d\'utilisateur ne doit pas dépasser 50 caractères' )]
+    #[Assert\Email(message: 'Le nom d\'utilisateur doit être votre adresse email')]
     private ?string $author = null;
 
     #[ORM\Column]
-    private ?bool $isPublished = false;
+    private ?bool $isPublished = true;
 
     #[ORM\Column]
     private ?\DateTime $dateCreated = null;
