@@ -17,7 +17,7 @@ class CategoryType extends AbstractType
             ->add('submit', SubmitType::class, [
                 'label' => 'Enregistrer',
                 'attr' => [
-                    'class' => 'btn btn-primary',
+                    'class' => 'btn btn-primary float-end',
                 ]
             ])
         ;

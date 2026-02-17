@@ -2,22 +2,22 @@
 
 {% block body %}
 
-    <h2>Détail d'un souhait</h2>
+    <h2 class="text-center p-3">Détail d'un souhait</h2>
 
     <div class="card mt-2 mb-2 w-50 m-auto">
         <div class="card-body">
-            <h5 class="card-title">{{ wish.title }}</h5>
-            <p class="card-body">par {{ wish.author }} le {{ wish.dateCreated|date('d/m/Y') }}</p>
-            <p class="card-body">{{ wish.description }}</p>
-            <p class="card-body">{{ wish.category }}</p>
-
-            <a class="btn btn-warning"
-               href="{{ path('app_wish_update', {id: wish.id}) }}" role="button">Modifier</a>
-            <a href="{{ path('app_wish_delete', {id: wish.id, token: csrf_token('delete' ~ wish.id)}) }}"
-               class="btn btn-danger"
-               onclick="return confirm('Etes-vous sûr???')"
-            >Supprimer</a>
-
+            <h5 class="card-title text-center">{{ wish.title }}</h5>
+            <p class="card-body text-center">Catégorie : {{ wish.category }} | par {{ wish.author }} le {{ wish.dateCreated|date('d/m/Y') }}</p>
+            <p class="card-body pb-0-1"><strong>Description du souhait : </strong></p>
+            <p class="card-body pt-0">{{ wish.description }}</p>
+            <div class="text-center">
+                <a class="btn btn-warning"
+                   href="{{ path('app_wish_update', {id: wish.id}) }}" role="button">Modifier</a>
+                <a href="{{ path('app_wish_delete', {id: wish.id, token: csrf_token('delete' ~ wish.id)}) }}"
+                   class="btn btn-danger"
+                   onclick="return confirm('Etes-vous sûr???')"
+                >Supprimer</a>
+            </div>
         </div>
     </div>
 

@@ -68,7 +68,7 @@ class Wish
 
     public function setTitle(?string $title): static
     {
-        $this->title = $title;
+        $this->title = $title ? ucfirst($title) : $title;
 
         return $this;
     }
