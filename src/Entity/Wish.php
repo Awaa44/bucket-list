@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: WishRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Wish
 {
     #[ORM\Id]
@@ -39,6 +40,17 @@ class Wish
 
     #[ORM\Column(nullable: true)]
     private ?\DateTime $dateUpdated = null;
+
+    //ajout de 2 fonctions pour mettre à jour la date à la date du jour
+    #[ORM\PrePersist]
+    public function onPersist(): void {
+        $this->dateCreated = new \DateTime();
+    }
+
+    #[ORM\PreUpdate]
+    public function onUpdate(): void {
+        $this->dateUpdated = new \DateTime();
+    }
 
     public function getId(): ?int
     {

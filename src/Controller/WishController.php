@@ -50,7 +50,7 @@ final class WishController extends AbstractController
 
         if($wishForm->isSubmitted() && $wishForm->isValid()){
             //date du jour
-            $wish->setDateCreated(new \DateTime());
+            //$wish->setDateCreated(new \DateTime());
             //enregistrement dans la base de données
             $em->persist($wish);
             $em->flush();
@@ -67,15 +67,39 @@ final class WishController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: '_delete', requirements: ['id'=> '\d+'], methods: ['DELETE'])]
+    #[Route('/update/{id}', name: '_update', requirements: ['id'=> '\d+'])]
+    public function update(Request $request, EntityManagerInterface $em, Wish $wish): Response
+    {
+        $wishForm = $this->createForm(WishType::class, $wish);
+        $wishForm->handleRequest($request);
+
+        if($wishForm->isSubmitted() && $wishForm->isValid()){
+            //enregistrement dans la base de données
+            $em->flush();
+
+            //message de succès
+            $message = 'Votre souhait a bien été modifié';
+            $this->addFlash('success', $message);
+            //redirection vers la liste des souhaits vers le détail du souhait
+            return $this->redirectToRoute('app_wish_detail', ['id' => $wish->getId()]);
+        }
+
+        return $this-> render('wish/edit.html.twig', [
+            'wish_form' => $wishForm,
+            'wish' => $wish,
+        ]);
+    }
+
+    #[Route('/delete/{id}', name: '_delete', requirements: ['id'=> '\d+'])]
     public function delete(Wish $wish, EntityManagerInterface $em, Request $request): Response
     {
         //récupération du token de sécurité
-        $token =$request->query->get('_token');
+        $token = $request->query->get('token');
 
         if ($this->isCsrfTokenValid('delete'.$wish->getId(), $token)) {
             $em->remove($wish);
             $em->flush();
+
             $this->addFlash('success', 'Votre souhait a été supprimé avec succès');
             return $this->redirectToRoute('app_wish_list');
         }
