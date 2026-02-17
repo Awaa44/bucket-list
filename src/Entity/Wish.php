@@ -41,6 +41,10 @@ class Wish
     #[ORM\Column(nullable: true)]
     private ?\DateTime $dateUpdated = null;
 
+    #[ORM\ManyToOne(inversedBy: 'wishes')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Category $category = null;
+
     //ajout de 2 fonctions pour mettre à jour la date à la date du jour
     #[ORM\PrePersist]
     public function onPersist(): void {
@@ -125,6 +129,18 @@ class Wish
     public function setDateUpdated(\DateTime $dateUpdated): static
     {
         $this->dateUpdated = $dateUpdated;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): static
+    {
+        $this->category = $category;
 
         return $this;
     }

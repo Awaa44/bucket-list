@@ -14,6 +14,7 @@
             <th scope="col">Publié</th>
             <th scope="col">Date de création</th>
             <th scope="col">Date de modificattion</th>
+            <th scope="col">Catégorie</th>
         </tr>
         </thead>
         <tbody>
@@ -26,6 +27,7 @@
             <td>{{ wish.isPublished ? 'Oui' : "Non" }}</td>
             <td>{{ wish.dateCreated|date('d/m/Y') }}</td>
             <td>{{ wish.dateUpdated ? wish.dateUpdated|date('d/m/Y') : '' }}</td>
+            <td>{{ wish.category }}</td>
         </tr>
         {% endfor %}
         </tbody>
