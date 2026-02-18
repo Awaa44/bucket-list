@@ -42,7 +42,7 @@ class Wish
     private ?\DateTime $dateUpdated = null;
 
     #[ORM\ManyToOne(inversedBy: 'wishes')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Category $category = null;
 
     //ajout de 2 fonctions pour mettre à jour la date à la date du jour
