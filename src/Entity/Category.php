@@ -6,8 +6,11 @@ use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
+//mettre l'annotation pour empêcher la création d'une catégorie avec le même nom car unique
+#[UniqueEntity(fields: 'name', message: 'The name is already used')]
 class Category
 {
     #[ORM\Id]

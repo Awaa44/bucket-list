@@ -10,8 +10,10 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/category', name: 'app_category')]
+#[IsGranted("ROLE_ADMIN")]
 final class CategoryController extends AbstractController
 {
     #[Route('/create', name: '_create')]

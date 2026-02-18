@@ -10,9 +10,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Config\Doctrine\Orm\EntityManagerConfig;
 
 #[Route('/wish', name: 'app_wish')]
+#[IsGranted("ROLE_USER")]
 final class WishController extends AbstractController
 {
     #[Route('/', name: '_list', methods: ['GET'])]
@@ -90,7 +92,9 @@ final class WishController extends AbstractController
         ]);
     }
 
+
     #[Route('/delete/{id}', name: '_delete', requirements: ['id'=> '\d+'])]
+    #[IsGranted("ROLE_ADMIN")]
     public function delete(Wish $wish, EntityManagerInterface $em, Request $request): Response
     {
         //récupération du token de sécurité
