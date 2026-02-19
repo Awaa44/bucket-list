@@ -33,7 +33,7 @@ class WishRepository extends ServiceEntityRepository
             ->leftJoin('w.category', 'category')
             ->leftJoin('w.username', 'username')
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getResult();
     }
 
 
