@@ -14,7 +14,6 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Config\Doctrine\Orm\EntityManagerConfig;
 
 #[Route('/wish', name: 'app_wish')]
-#[IsGranted("ROLE_USER")]
 final class WishController extends AbstractController
 {
     #[Route('/', name: '_list', methods: ['GET'])]
@@ -42,6 +41,7 @@ final class WishController extends AbstractController
         ]);
     }
 
+    #[IsGranted("ROLE_USER")]
     #[Route('/create', name: '_create')]
     public function create(Request $request, EntityManagerInterface $em): Response
     {
@@ -53,6 +53,8 @@ final class WishController extends AbstractController
         if($wishForm->isSubmitted() && $wishForm->isValid()){
             //date du jour
             //$wish->setDateCreated(new \DateTime());
+            //associer l'utilisateur connecté
+            $wish->setUsername($this->getUser());
             //enregistrement dans la base de données
             $em->persist($wish);
             $em->flush();
@@ -69,13 +71,15 @@ final class WishController extends AbstractController
         ]);
     }
 
+    #[IsGranted("ROLE_USER")]
     #[Route('/update/{id}', name: '_update', requirements: ['id'=> '\d+'])]
     public function update(Request $request, EntityManagerInterface $em, Wish $wish): Response
     {
         $wishForm = $this->createForm(WishType::class, $wish);
         $wishForm->handleRequest($request);
 
-        if($wishForm->isSubmitted() && $wishForm->isValid()){
+        if($wishForm->isSubmitted() && $wishForm->isValid()
+            && ($this->getUser() === $wish->getUsername() || $this->isGranted('ROLE_ADMIN'))){
             //enregistrement dans la base de données
             $em->flush();
 
@@ -92,15 +96,15 @@ final class WishController extends AbstractController
         ]);
     }
 
-
+    #[IsGranted("ROLE_USER")]
     #[Route('/delete/{id}', name: '_delete', requirements: ['id'=> '\d+'])]
-    #[IsGranted("ROLE_ADMIN")]
     public function delete(Wish $wish, EntityManagerInterface $em, Request $request): Response
     {
         //récupération du token de sécurité
         $token = $request->query->get('token');
 
-        if ($this->isCsrfTokenValid('delete'.$wish->getId(), $token)) {
+        if ($this->isCsrfTokenValid('delete'.$wish->getId(), $token)
+            && ($this->getUser() === $wish->getUsername() || $this->isGranted('ROLE_ADMIN'))) {
             $em->remove($wish);
             $em->flush();
 

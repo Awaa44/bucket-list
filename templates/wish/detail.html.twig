@@ -7,13 +7,15 @@
     <div class="card mt-2 mb-2 w-50 m-auto">
         <div class="card-body">
             <h5 class="card-title text-center">{{ wish.title }}</h5>
-            <p class="card-body text-center">Catégorie : {{ wish.category }} | par {{ wish.author }} le {{ wish.dateCreated|date('d/m/Y') }}</p>
+            <p class="card-body text-center">Catégorie : {{ wish.category }} | par {{ wish.username.username }} le {{ wish.dateCreated|date('d/m/Y') }}</p>
             <p class="card-body pb-0-1"><strong>Description du souhait : </strong></p>
             <p class="card-body pt-0">{{ wish.description }}</p>
             <div class="text-center">
+                {% if is_granted('ROLE_ADMIN') or wish.username.username == app.user.username %}
                 <a class="btn btn-warning"
                    href="{{ path('app_wish_update', {id: wish.id}) }}" role="button">Modifier</a>
-                {% if is_granted('ROLE_ADMIN') %}
+                {% endif %}
+                {% if is_granted('ROLE_ADMIN') or wish.username.username == app.user.username %}
                 <a href="{{ path('app_wish_delete', {id: wish.id, token: csrf_token('delete' ~ wish.id)}) }}"
                    class="btn btn-danger"
                    onclick="return confirm('Etes-vous sûr???')"

@@ -49,9 +49,9 @@ class RegistrationFormType extends AbstractType
                             // max length allowed by Symfony for security reasons
                             max: 4096,
                         ),
-                        new NotCompromisedPassword(
+                        /*new NotCompromisedPassword(
                             message: 'Votre mot de passe fait parti des mots de passe compromis',
-                        )
+                        )*/
                     ],
                 ],
                 'second_options' => [

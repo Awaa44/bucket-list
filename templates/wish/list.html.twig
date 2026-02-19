@@ -23,7 +23,7 @@
             <th scope="row">{{ wish.id }}</th>
             <td><a href="{{ path('app_wish_detail', {id: wish.id}) }}">{{ wish.title }}</a></td>
             <td>{{ wish.description }}</td>
-            <td>{{ wish.author }}</td>
+            <td>{{ wish.username.username }}</td>
             <td>{{ wish.isPublished ? 'Oui' : "Non" }}</td>
             <td>{{ wish.dateCreated|date('d/m/Y') }}</td>
             <td>{{ wish.dateUpdated ? wish.dateUpdated|date('d/m/Y') : '' }}</td>

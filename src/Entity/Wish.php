@@ -26,12 +26,6 @@ class Wish
     #[Assert\NotBlank(message: 'La description de votre souhait est obligatoire')]
     private ?string $description = null;
 
-    #[ORM\Column(length: 50)]
-    #[Assert\NotBlank(message: 'Le nom d\'utilisateur est obligatoire')]
-    #[Assert\Length(max: 50, maxMessage: 'Le nom d\'utilisateur ne doit pas dépasser 50 caractères' )]
-    #[Assert\Email(message: 'Le nom d\'utilisateur doit être votre adresse email')]
-    private ?string $author = null;
-
     #[ORM\Column]
     private ?bool $isPublished = true;
 
@@ -44,6 +38,10 @@ class Wish
     #[ORM\ManyToOne(inversedBy: 'wishes', fetch: 'EAGER')]
     #[ORM\JoinColumn(nullable: true)]
     private ?Category $category = null;
+
+    #[ORM\ManyToOne(inversedBy: 'wishes')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $username = null;
 
     //ajout de 2 fonctions pour mettre à jour la date à la date du jour
     #[ORM\PrePersist]
@@ -81,18 +79,6 @@ class Wish
     public function setDescription(string $description): static
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    public function getAuthor(): ?string
-    {
-        return $this->author;
-    }
-
-    public function setAuthor(?string $author): static
-    {
-        $this->author = $author;
 
         return $this;
     }
@@ -141,6 +127,18 @@ class Wish
     public function setCategory(?Category $category): static
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getUsername(): ?User
+    {
+        return $this->username;
+    }
+
+    public function setUsername(?User $username): static
+    {
+        $this->username = $username;
 
         return $this;
     }

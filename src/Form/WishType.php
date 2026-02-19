@@ -27,10 +27,6 @@ class WishType extends AbstractType
                 'label' => 'Description',
                 'required' => false,
             ])
-            ->add('author', EmailType::class, [
-                'label' => 'Auteur',
-                'required' => false,
-            ])
             ->add('isPublished', CheckboxType::class, [
                 'label' => 'Published',
                 'required' => false,
