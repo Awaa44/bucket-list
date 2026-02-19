@@ -16,6 +16,28 @@ class WishRepository extends ServiceEntityRepository
         parent::__construct($registry, Wish::class);
     }
 
+    public function getDetailWish(int $id): ?Wish {
+        return $this->createQueryBuilder('w')
+            ->addSelect('category', 'username')
+            ->leftJoin('w.category', 'category')
+            ->leftJoin('w.username', 'username')
+            ->andWhere('w.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    public function getListWishes(): array {
+        return $this->createQueryBuilder('w')
+            ->addSelect('category', 'username')
+            ->leftJoin('w.category', 'category')
+            ->leftJoin('w.username', 'username')
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+
+
     //    /**
     //     * @return Wish[] Returns an array of Wish objects
     //     */

@@ -19,7 +19,8 @@ final class WishController extends AbstractController
     #[Route('/', name: '_list', methods: ['GET'])]
     public function list(WishRepository $wishRepository): Response
     {
-        $wishes = $wishRepository->findBy(['isPublished' => true], ['dateCreated' => 'DESC']);
+        //$wishes = $wishRepository->findBy(['isPublished' => true], ['dateCreated' => 'DESC']);
+        $wishes = $wishRepository->getListWishes();
 
         return $this-> render('wish/list.html.twig', [
             'wishes' => $wishes,
@@ -29,7 +30,7 @@ final class WishController extends AbstractController
     #[Route('/{id}', name: '_detail', requirements: ['id'=> '\d+'], methods: ['GET'])]
     public function wishDetail(WishRepository $wishRepository, int $id): Response
     {
-        $wish = $wishRepository->findOneBy(['id' => $id]);
+        $wish = $wishRepository->getDetailWish($id);
 
         //affichage page 404
         if(!$wish){
